@@ -1,0 +1,48 @@
+/* box.css */
+
+.box {
+  height: 100%;
+  width: 50%;
+  min-height: 300px;
+  float: left;
+	background-color: #F1F1F1;
+}
+
+.impUrg {
+	background-color: red;
+}
+
+.box_header {
+	background-color: grey;
+	color: white;
+	padding: 5px;
+	height: 15px;
+
+}
+
+h2.box_title {
+	display: inline-block;
+	float: left;
+}
+
+h5.box_item_count {
+	display: inline-block;
+	float: right;
+}
+
+.box_one {
+	background-color: red;
+}
+
+.box_two {
+	background-color: green;
+}
+
+.box_three {
+	background-color: blue;
+}
+
+.box_four {
+	background-color: grey;
+}
+
