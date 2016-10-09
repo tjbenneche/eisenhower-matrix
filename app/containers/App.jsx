@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-export default class App extends Component {
-  static propTypes = {
+const App = React.createClass({
+  propTypes: {
     children: PropTypes.element.isRequired
-  };
+  },
 
   render() {
     return (
@@ -12,4 +12,7 @@ export default class App extends Component {
       </div>
     );
   }
-}
+});
+
+module.exports = App;
+

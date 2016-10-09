@@ -1,84 +1,61 @@
 import React, { Component } from 'react';
-import List from '../List/List';
 import styles from './Box.css';
+import ListItem from '../ListItem/ListItem';
 
 const Box = React.createClass({
   getInitialState() {
     return {
-      totalListItems: 21,
-      incompleteListItems: 2,
-      impUrg: [
-          {
-            id: "00001",
-            task: "Apply for job",
-            complete: false
-          },
-          {
-            id: "00002",
-            task: "Eat breakfast",
-            complete: true
-          },
-          {
-            id: "00003",
-            task: "Go to work",
-            complete: false
-          },
-          {
-            id: "00004",
-            task: "Organize notes",
-            complete: false
-          }
-      ],
-      impNoUrg: [
-        {
-          id: "00005",
-          task: "Dry cleaners",
-          complete: true
-        },
-        {
-          id: "00006",
-          task: "Learn Electron",
-          complete: false
-        }
-      ],
-      noImpUrg: [
-        {
-          id: "00007",
-          task: "Tesk task",
-          complete: false
-        }
-      ],
-      noImpNoUrg: [
-        {
-          id: "00008",
-          task: "Sample task",
-          complete: false
-        }
-      ]
+      taskData: []
     };
   },
   propTypes: {
     boxTitle: React.PropTypes.string,
-    boxId: React.PropTypes.string,
-    listData: React.PropTypes.array
+    boxId: React.PropTypes.string
+  },
+  handleAddNewClick(){
+    this.setState({ 
+        taskData: this.state.taskData.concat([
+          {          
+            box: this.props.boxId, 
+            task : "added by click", 
+            completed: false
+          }
+      ])
+    });  
+  }, 
+  getItems() {
+    const data = this.state.taskData;
+    const rows = [];
+
+    data.forEach(function(dataItem){
+      rows.push(
+        <ListItem              
+          isComplete={dataItem.completed}
+          key={dataItem._id} 
+          itemTitle={dataItem.task} 
+        />)
+    });
+    return rows;
   },
   render() {
-    const boxArray = this.props.boxId;
-    const totalBoxItems = boxArray.length;
-
     return (
-      <div>
-        <div>
-          <div className={styles.box}>
-            <div className={styles.box_header}>  
-              <h2 className={styles.box_title}>{this.props.boxTitle}</h2>
-              <h5 className={styles.box_item_count}>{totalBoxItems}</h5>
+        <div> 
+          <div>
+            <div className={styles.box}>
+              <div className={styles.box_header}>  
+                <h2 className={styles.box_title}>{this.boxTitle}</h2>
+                <h5 className={styles.box_item_count}></h5>
+              </div>
+              <div>
+                <div className={styles.list_container}>
+                  <button className="add-new" onClick={this.handleAddNewClick}>Add New</button>
+                  <ul className={styles.list}>{this.getItems()}</ul>
+                </div>
+              </div>
             </div>
-            <List listData={this.state[boxArray]}/>
           </div>
         </div>
-      </div>
-    );
+      );
   }
 });
 

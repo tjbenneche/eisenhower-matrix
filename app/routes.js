@@ -9,5 +9,5 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
     <Route path="/counter" component={CounterPage} />
-  </Route>
+    </Route>
 );

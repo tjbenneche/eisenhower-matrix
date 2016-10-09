@@ -4,7 +4,7 @@ import Box from '../Box/Box';
 import styles from './Boxes.css';
 
 const Boxes = React.createClass({
-  render() {
+  render() {  
     return (
       <div>
         <div className={styles.row}>
@@ -20,4 +20,4 @@ const Boxes = React.createClass({
   }
 });
 
-module.exports = Boxes;
+module.exports = Boxes

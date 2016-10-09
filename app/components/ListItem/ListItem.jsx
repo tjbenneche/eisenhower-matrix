@@ -8,9 +8,6 @@ const ListItem = React.createClass({
     itemId: React.PropTypes.string,
     placeholderText: React.PropTypes.string
   },
-  handleAddNewClick(){
-    alert('clicked');
-  }, 
   render() {
     const title = this.props.itemTitle;
     const itemKey = this.props.itemId;
@@ -18,7 +15,7 @@ const ListItem = React.createClass({
 
     return (
       <div>
-        <li className={styles.list_item} key={itemKey}>{title}<span>{didComplete}</span></li>
+        <li className={styles.list_item} key={itemKey}>{title}</li>
       </div>
     );
   }
