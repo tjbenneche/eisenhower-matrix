@@ -8,6 +8,10 @@
 	background-color: #F1F1F1;
 }
 
+.box_inner {
+	padding: 5px;
+}
+
 .impUrg {
 	background-color: red;
 }
@@ -17,32 +21,16 @@
 	color: white;
 	padding: 5px;
 	height: 15px;
+}
+
+button.add-new {
 
 }
 
 h2.box_title {
-	display: inline-block;
-	float: left;
-}
-
-h5.box_item_count {
-	display: inline-block;
 	float: right;
 }
 
-.box_one {
-	background-color: red;
+input.task_entry {
+	width: 100%;
 }
-
-.box_two {
-	background-color: green;
-}
-
-.box_three {
-	background-color: blue;
-}
-
-.box_four {
-	background-color: grey;
-}
-

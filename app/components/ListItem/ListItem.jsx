@@ -5,8 +5,10 @@ const ListItem = React.createClass({
   propTypes: {
     isComplete: React.PropTypes.bool,
     itemTitle: React.PropTypes.string,
-    itemId: React.PropTypes.string,
-    placeholderText: React.PropTypes.string
+    itemId: React.PropTypes.string
+  },
+  handleCheck(event){
+    console.log('checked');
   },
   render() {
     const title = this.props.itemTitle;
@@ -15,7 +17,10 @@ const ListItem = React.createClass({
 
     return (
       <div>
-        <li className={styles.list_item} key={itemKey}>{title}</li>
+        <li className={styles.list_item} key={itemKey}>
+          <input type="checkbox" onChange={this.handleCheck} />
+          {title}
+        </li>
       </div>
     );
   }
