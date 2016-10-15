@@ -3,14 +3,6 @@ import { findDOMNode } from 'react-dom';
 import ItemTypes from './ItemTypes';
 import { DragSource, DropTarget } from 'react-dnd';
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move'
-};
-
 const cardSource = {
   beginDrag(props) {
     return {
@@ -74,7 +66,7 @@ const cardTarget = {
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
 }))
-export default class Card extends Component {
+export default class Task extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
@@ -85,12 +77,19 @@ export default class Card extends Component {
     moveCard: PropTypes.func.isRequired
   };
 
+  handleCheck(event){
+    console.log('checked');
+  }
+
   render() {
     const { task, isDragging, connectDragSource, connectDropTarget } = this.props;
-    const opacity = isDragging ? 0 : 1;
 
     return connectDragSource(connectDropTarget(
-      <div style={{ ...style, opacity }}>
+      <div className="task">
+        <input 
+          className='task_checkbox'
+          type="checkbox" 
+          onChange={this.handleCheck} />
         {task}
       </div>
     ));

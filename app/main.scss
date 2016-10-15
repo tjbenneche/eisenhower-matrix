@@ -1,6 +1,11 @@
+/* helpers */
+@import './scss/helpers/variables.scss';
+
 /* base */
 @import './scss/base/reset.scss';
+@import './scss/base/typography.scss';
 
 /* components */
-@import './scss/components/Box.scss';
 @import './scss/components/Boxes.scss';
+@import './scss/components/Box.scss';
+@import './scss/components/Task.scss';

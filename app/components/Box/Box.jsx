@@ -56,53 +56,42 @@ class Box extends React.Component {
     this.setState({value: val});
   }
 
-  getItems() {
-    const data = this.state.taskData;
-    const rows = [];
-
-    data.forEach(function(dataItem){
-      rows.push(
-        <div>
-          <ListItem              
-            isComplete={dataItem.completed}
-            key={dataItem._id} 
-            itemTitle={dataItem.task} 
-          />
-        </div>
-      );
-    });
-    return rows;
-  }
-
   render() {
     const { taskData } = this.state;
+    
     return (
       <div className='box'>
-        <div className='box_header'>  
-          <h2 className='box_title'>{this.props.boxTitle}</h2>
-          <button className='add_new' onClick={this.handleAddTaskClick.bind(this)}>Add</button>
-        </div>
-        <div className='box_inner'>
-          <div className='list_container'>
-            <input 
-              ref="task_entry"
-              className='task_entry'
-              type="text" 
-              placeholder="Enter task"
-              value={this.state.value}
-              onChange={this.handleChange.bind(this)} 
-            />
-            {taskData.map((card, i) => {
-              return (
-                <Card 
-                  key={card.id}
-                  index={i}
-                  id={card.id}
-                  task={card.task}
-                  moveCard={this.moveCard} 
-                  />
-              );
-            })}
+        <div className='box_container'>
+          <div className='box_header'>  
+            <h2 className='box_title'>{this.props.boxTitle}</h2>
+            <button 
+              className='add_new' 
+              onClick={this.handleAddTaskClick.bind(this)}>
+              Add
+            </button>
+          </div>
+          <div className='box_inner'>
+            <div className='list_container'>
+              <input 
+                ref="task_entry"
+                className='task_entry'
+                type="text" 
+                placeholder="Enter task"
+                value={this.state.value}
+                onChange={this.handleChange.bind(this)} 
+              />
+              {taskData.map((card, i) => {
+                return (
+                  <Card 
+                    key={card.id}
+                    index={i}
+                    id={card.id}
+                    task={card.task}
+                    moveCard={this.moveCard} 
+                    />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
