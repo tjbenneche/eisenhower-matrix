@@ -1,15 +1,14 @@
-/* box.css */
-
 .box {
   height: 100%;
   width: 50%;
   min-height: 350px;
   float: left;
-	background-color: #FFF;
-}
+  background-color: #FFF;
 
-.impUrg {
-	background-color: red;
+	&:nth-of-type(1) {
+		background-color: red;
+	}
+
 }
 
 .box_header {
@@ -19,12 +18,12 @@
 	height: 15px;
 }
 
-button.add-new {
-
+button.add_new {
+	float: right;
 }
 
 h2.box_title {
-	float: right;
+	float: left;
 }
 
 input.task_entry {
