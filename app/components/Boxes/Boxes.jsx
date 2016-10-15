@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import Box from '../Box/Box';
+import Box from '../Box/Box'
 import styles from './Boxes.css';
 
 const Boxes = React.createClass({

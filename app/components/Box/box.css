@@ -5,11 +5,7 @@
   width: 50%;
   min-height: 350px;
   float: left;
-	background-color: #F1F1F1;
-}
-
-.box_inner {
-	padding: 5px;
+	background-color: #FFF;
 }
 
 .impUrg {
@@ -17,8 +13,8 @@
 }
 
 .box_header {
-	background-color: grey;
-	color: white;
+	background-color: #F1F1F1;
+	color: #222;
 	padding: 5px;
 	height: 15px;
 }
