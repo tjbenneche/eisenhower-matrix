@@ -1,3 +1,18 @@
 .task {
 	padding: $base-spacing 0;
 }
+
+.task_strikethrough {
+	padding: $base-spacing 0;
+	text-decoration: line-through;	
+}
+
+input.task_checkbox {
+	margin-right: $base-spacing*2;
+  -webkit-appearance: none;
+  height: $gutter;
+  width: $gutter;
+  border-radius: 3px;
+  display: inline-block;
+  float: left;
+}

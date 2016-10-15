@@ -1,7 +1,8 @@
 /* colors */
 
 $black: #1F271B;
-$white: #F3FCF0;
+$white: #FFF;
+$grey: #F1F1F1;
 $yellow: #FAC05E;
 $red: #F79D84;
 $blue: #3FA7D6;
@@ -10,8 +11,13 @@ $green: #59CD90;
 /* typography */
 
 $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$alt-font-family: "Courier New", Courier, monospace;
 
 /* spacing */
 
 $base-spacing: 5px;
 $gutter: $base-spacing*3;
+
+/* borders */
+
+$base-border: 1px dashed $grey;

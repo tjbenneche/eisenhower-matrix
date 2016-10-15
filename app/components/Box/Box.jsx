@@ -1,6 +1,6 @@
 import React from 'react';
 import update from 'react/lib/update';
-import Card from './Card';
+import Task from '../Task/Task';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -11,6 +11,8 @@ class Box extends React.Component {
     this.moveCard = this.moveCard.bind(this);
     this.state = {
       taskData: [],
+      totalTasks: 0,
+      completedTasks: 0,
       value: ""
     };
   }
@@ -34,21 +36,29 @@ class Box extends React.Component {
     }));
   }
 
-  handleAddTaskClick(){
-    const currentId = this.state.taskData.length + 1;
-    this.setState({ 
-      taskData: this.state.taskData.concat([
-        {  
-          id: currentId,        
-          box: this.props.boxId, 
-          task : this.state.value, 
-          completed: false
-        }
-      ])
-    }, function(){
-      // clear field
-      this.refs.task_entry.value = '';
-    });  
+  handleAddTask(event){
+    if (event.which === 13){
+      event.preventDefault();
+      const currentIndex = this.state.taskData.length + 1;
+      this.setState({totalTasks: currentIndex });
+
+      this.setState({ 
+        taskData: this.state.taskData.concat([
+          {  
+            id: currentIndex,        
+            box: this.props.boxId, 
+            task : this.state.value, 
+            completed: false
+          }
+        ])
+      }, function(){
+        // clear field
+        this.refs.task_entry.value = '';
+      }); 
+    } else {
+      // do nothing unless Enter Key
+    }
+ 
   }
 
   handleChange(event) {
@@ -58,41 +68,43 @@ class Box extends React.Component {
 
   render() {
     const { taskData } = this.state;
-    
+
     return (
       <div className='box'>
         <div className='box_container'>
           <div className='box_header'>  
-            <h2 className='box_title'>{this.props.boxTitle}</h2>
+            <h2 className='box_title'>{this.props.boxTitle}</h2> 
+            <span className='tasks_counter'>{this.state.completedTasks} / {this.state.totalTasks}</span>
+          </div>
+          <div className='input_container'>
             <button 
               className='add_new' 
-              onClick={this.handleAddTaskClick.bind(this)}>
-              Add
+              onClick={this.handleAddTask.bind(this)}>
+              +
             </button>
+            <input 
+              ref="task_entry"
+              className='task_entry'
+              type="text" 
+              placeholder="Enter Task"
+              value={this.state.value}
+              onKeyPress={this.handleAddTask.bind(this)}
+              onChange={this.handleChange.bind(this)} 
+            />
           </div>
           <div className='box_inner'>
-            <div className='list_container'>
-              <input 
-                ref="task_entry"
-                className='task_entry'
-                type="text" 
-                placeholder="Enter task"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)} 
-              />
-              {taskData.map((card, i) => {
+              {taskData.map((task, i) => {
                 return (
-                  <Card 
-                    key={card.id}
+                  <Task 
+                    key={task.id}
                     index={i}
-                    id={card.id}
-                    task={card.task}
+                    id={task.id}
+                    task={task.task}
                     moveCard={this.moveCard} 
                     />
                 );
               })}
             </div>
-          </div>
         </div>
       </div>
     );
