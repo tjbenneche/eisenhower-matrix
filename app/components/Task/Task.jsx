@@ -71,6 +71,7 @@ export default class Task extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
+    taskComplete: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
@@ -80,9 +81,13 @@ export default class Task extends Component {
 
   handleCheck(event){
     if (this.state.completed === false){
-      this.setState({completed: true});
+      this.setState({completed: true}, function(){
+        this.props.taskComplete(this.state.completed);
+      });
     } else {
-      this.setState({completed: false});
+      this.setState({completed: false}, function(){
+        this.props.taskComplete(this.state.completed);
+      });
     }
   }
 

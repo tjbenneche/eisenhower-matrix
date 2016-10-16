@@ -61,6 +61,15 @@ class Box extends React.Component {
  
   }
 
+  handleCompletedTasksCount(taskFinished){
+    const completedIndex = this.state.completedTasks;
+    if(taskFinished){
+      this.setState({completedTasks: completedIndex + 1});
+    } else if (!taskFinished) {
+      this.setState({completedTasks: completedIndex - 1});
+    }
+  }
+
   handleChange(event) {
     var val = event.target.value;
     this.setState({value: val});
@@ -100,6 +109,7 @@ class Box extends React.Component {
                     index={i}
                     id={task.id}
                     task={task.task}
+                    taskComplete={this.handleCompletedTasksCount.bind(this)}
                     moveCard={this.moveCard} 
                     />
                 );
