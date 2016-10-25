@@ -3,6 +3,7 @@ import update from 'react/lib/update';
 import Task from '../Task/Task';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import storage from 'electron-json-storage';
 
 @DragDropContext(HTML5Backend)
 class Box extends React.Component {
@@ -10,7 +11,7 @@ class Box extends React.Component {
     super(props);
     this.moveCard = this.moveCard.bind(this);
     this.state = {
-      taskData: [],
+      taskData: undefined,
       totalTasks: 0,
       completedTasks: 0,
       value: ""
@@ -46,24 +47,20 @@ class Box extends React.Component {
         task : this.state.value, 
         completed: false
       };
-      const tasksArr = JSON.parse(localStorage.getItem(this.props.boxId + '_data'));
+  
+      storage.set('task', { foo : addedTask }, function(error) {
+        if (error) throw error;
+      });
+
       const currentIndex = this.state.totalTasks + 1;
       this.setState({totalTasks : currentIndex});
-
-      const newTasksArr = tasksArr.push(addedTask);
-      localStorage.setItem(this.props.boxId + '_data', JSON.stringify(newTasksArr));
-
       this.refs.task_entry.value = '';
     }
   }
 
   handleCompletedTasksCount(taskFinished){
-    const completedIndex = this.state.completedTasks;
-    if(taskFinished){
-      this.setState({completedTasks: completedIndex + 1});
-    } else if (!taskFinished) {
-      this.setState({completedTasks: completedIndex - 1});
-    }
+    const index = this.state.completedTasks;
+    taskFinished ? this.setState({completedTasks: index + 1}) : this.setState({completedTasks: index - 1})
   }
 
   handleChange(event) {
@@ -71,15 +68,25 @@ class Box extends React.Component {
     this.setState({value: val});
   }
 
+  componentWillMount() {
+    storage.get('task', (error, data) => {
+      if (error) return;
+      if (data) {
+        this.setState({taskData: [data.foo]});
+        this.setState({totalTasks: [data.foo].length})
+      }
+    });     
+  }
+
   render() {
-    const taskData = JSON.parse(localStorage.getItem(this.props.boxId + '_data'));
+    const { taskData, totalTasks, completedTasks } = this.state;
 
     return (
       <div className='box'>
         <div className='box_container'>
           <div className='box_header'>  
             <h2 className='box_title'>{this.props.boxTitle}</h2> 
-            <span className='tasks_counter'>{this.state.completedTasks} / {this.state.totalTasks}</span>
+            <span className='tasks_counter'>{completedTasks} / {totalTasks}</span>
           </div>
           <div className='input_container'>
             <button 
@@ -98,7 +105,7 @@ class Box extends React.Component {
             />
           </div>
           <div className='box_inner'>
-              {taskData.map((task, i) => {
+              {taskData ? taskData.map((task, i) => {
                 return (
                   <Task 
                     key={task.id}
@@ -109,11 +116,14 @@ class Box extends React.Component {
                     moveCard={this.moveCard} 
                     />
                 );
-              })}
+              })
+            : 'Loading...'
+            }
             </div>
         </div>
       </div>
-    );
+    )
+
   }
 }
 

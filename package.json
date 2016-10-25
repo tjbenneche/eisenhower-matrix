@@ -107,7 +107,7 @@
     "co-nedb": "^2.0.1",
     "css-modules-require-hook": "^4.0.3",
     "electron-debug": "^1.0.1",
-    "electron-json-storage": "^2.0.1",
+    "electron-json-storage": "^2.0.2",
     "fluxxor": "^1.7.3",
     "font-awesome": "^4.6.3",
     "nedb": "^1.8.0",
