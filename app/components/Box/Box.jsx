@@ -39,26 +39,22 @@ class Box extends React.Component {
   handleAddTask(event){
     if (event.which === 13){
       event.preventDefault();
-      const currentIndex = this.state.taskData.length + 1;
-      this.setState({totalTasks: currentIndex });
 
-      this.setState({ 
-        taskData: this.state.taskData.concat([
-          {  
-            id: currentIndex,        
-            box: this.props.boxId, 
-            task : this.state.value, 
-            completed: false
-          }
-        ])
-      }, function(){
-        // clear field
-        this.refs.task_entry.value = '';
-      }); 
-    } else {
-      // do nothing unless Enter Key
+      const addedTask = {  
+        id: currentIndex,        
+        box: this.props.boxId, 
+        task : this.state.value, 
+        completed: false
+      };
+      const tasksArr = JSON.parse(localStorage.getItem(this.props.boxId + '_data'));
+      const currentIndex = this.state.totalTasks + 1;
+      this.setState({totalTasks : currentIndex});
+
+      const newTasksArr = tasksArr.push(addedTask);
+      localStorage.setItem(this.props.boxId + '_data', JSON.stringify(newTasksArr));
+
+      this.refs.task_entry.value = '';
     }
- 
   }
 
   handleCompletedTasksCount(taskFinished){
@@ -76,7 +72,7 @@ class Box extends React.Component {
   }
 
   render() {
-    const { taskData } = this.state;
+    const taskData = JSON.parse(localStorage.getItem(this.props.boxId + '_data'));
 
     return (
       <div className='box'>
