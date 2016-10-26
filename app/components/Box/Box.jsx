@@ -37,9 +37,29 @@ class Box extends React.Component {
     }));
   }
 
+  componentWillMount() {
+    // check our storage for old tasks if state 
+    // is empty (it should be on restart of app)
+    if(this.state.taskData === undefined){ 
+      console.log('sad!');
+      storage.get('task', (error, data) => {
+        if (error) return;
+        if (data) {
+          console.log(data.foo);
+          this.setState({taskData: [data.foo]});
+        }
+      });     
+    } else {
+      console.log('wasnt reloaded');
+    }
+  }
+
   handleAddTask(event){
-    if (event.which === 13){
+    // only run on enter keypress
+    if (event.which === 13){ 
       event.preventDefault();
+      const currentIndex = this.state.totalTasks + 1;
+      this.setState({totalTasks : currentIndex});
 
       const addedTask = {  
         id: currentIndex,        
@@ -47,14 +67,16 @@ class Box extends React.Component {
         task : this.state.value, 
         completed: false
       };
-  
-      storage.set('task', { foo : addedTask }, function(error) {
+ 
+      this.setState({taskData: [addedTask]});
+
+      // save to persistent storage too!
+      storage.set('task', { foo : addedTask }, function(error, data) {
         if (error) throw error;
       });
 
-      const currentIndex = this.state.totalTasks + 1;
-      this.setState({totalTasks : currentIndex});
       this.refs.task_entry.value = '';
+      this.forceUpdate();
     }
   }
 
@@ -68,16 +90,6 @@ class Box extends React.Component {
     this.setState({value: val});
   }
 
-  componentWillMount() {
-    storage.get('task', (error, data) => {
-      if (error) return;
-      if (data) {
-        this.setState({taskData: [data.foo]});
-        this.setState({totalTasks: [data.foo].length})
-      }
-    });     
-  }
-
   render() {
     const { taskData, totalTasks, completedTasks } = this.state;
 
@@ -89,11 +101,7 @@ class Box extends React.Component {
             <span className='tasks_counter'>{completedTasks} / {totalTasks}</span>
           </div>
           <div className='input_container'>
-            <button 
-              className='add_new' 
-              onClick={this.handleAddTask.bind(this)}>
-              +
-            </button>
+            <button className='add_new' onClick={this.handleAddTask.bind(this)}>+</button>
             <input 
               ref="task_entry"
               className='task_entry'
