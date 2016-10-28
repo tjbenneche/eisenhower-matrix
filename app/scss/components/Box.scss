@@ -10,7 +10,7 @@
 		border-right: $base-border;
 	 	color: $red;
 
-	 	.box_header, button.add_new{
+	 	.box_header, button.add_new, button.clear_all{
 			color: $red;
 		}
 
@@ -28,7 +28,7 @@
 		border-bottom: $base-border;
 	 	color: $green;
 
-	 	.box_header, button.add_new {
+	 	.box_header, button.add_new, button.clear_all {
 			color: $green;
 		}
 
@@ -45,7 +45,7 @@
 		border-right: $base-border;
 	 	color: $yellow;
 
-	 	.box_header, button.add_new {
+	 	.box_header, button.add_new, button.clear_all {
 			color: $yellow;
 		}
 
@@ -61,7 +61,7 @@
 	&:nth-of-type(4){
 	 	color: $blue;
 
-	 	.box_header, button.add_new {
+	 	.box_header, button.add_new, button.clear_all {
 			color: $blue;
 		}
 
@@ -96,7 +96,7 @@
 	width: 100%;
 	margin-bottom: $base-spacing*2;
 
-	button.add_new {
+	button.add_new, button.clear_all {
 		float: left;
 		outline: none;
 		border: 1px solid;
@@ -105,8 +105,12 @@
 		border-radius: 3px;
 	}
 
+	button.clear_all {
+		margin-left: $base-spacing;
+	}
+
 	input.task_entry {
-		width: 90%;
+		width: 80%;
 		margin-left: $base-spacing*2;
 		font-size: 1rem;
 		font-family: $alt-font-family;

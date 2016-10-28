@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import Box from '../Box/Box'
+import BoxContainer from '../Box/BoxContainer'
 
 const Boxes = React.createClass({
   render() {  
     return (
       <div>
-        <Box boxId="impUrg" boxTitle="Important & Urgent"/>
-        <Box boxId="impNoUrg" boxTitle="Important & Not Urgent"/>
-        <Box boxId="noImpUrg" boxTitle="Not Important & Urgent"/>
-        <Box boxId="noImpNoUrg" boxTitle="Not Important & Not Urgent"/>
+        <BoxContainer boxId="impUrg" boxTitle="Important & Urgent"/>
+        <BoxContainer boxId="impNoUrg" boxTitle="Important & Not Urgent"/>
+        <BoxContainer boxId="noImpUrg" boxTitle="Not Important & Urgent"/>
+        <BoxContainer boxId="noImpNoUrg" boxTitle="Not Important & Not Urgent"/>
       </div>
     );
   }
