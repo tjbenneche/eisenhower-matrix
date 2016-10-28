@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import Home from '../components/Home/Home';
+import Boxes from '../components/Boxes/Boxes';
 
 export default class HomePage extends Component {
   render() {
-    return (
-      <Home />
+  	return (
+    	<Boxes />
     );
   }
-}
+};
+
+module.exports = HomePage;
+

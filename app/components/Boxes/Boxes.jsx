@@ -19,4 +19,4 @@ const Boxes = React.createClass({
   }
 });
 
-module.exports = Boxes
+module.exports = Boxes;
