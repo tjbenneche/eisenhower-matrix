@@ -1,34 +1,26 @@
 .box {
-  height: 100%;
-  width: 49%;
+  flex: 0 0 50%;
   min-height: 348px;
-  float: left;
   background-color: $white;
 
-	&:nth-of-type(1) {
-		border-bottom: $base-border;
-		border-right: $base-border;
+	&.impUrg {
 	 	color: $red;
 
-	 	.box_header, button.add_new, button.clear_all{
+	 	h2.box_title, span.tasks_counter, .box_header, .task, button.add_new, button.clear_all{
 			color: $red;
 		}
-
 		input.task_checkbox {
-			 border: 1px solid $red;
-
+		 border: 1px solid $red;
 		 &:checked {
 		 		background: $red;
 		 }
-
 		}
 	}
 
-	&:nth-of-type(2){
-		border-bottom: $base-border;
+	&.impNoUrg{
 	 	color: $green;
 
-	 	.box_header, button.add_new, button.clear_all {
+	 	h2.box_title, span.tasks_counter, .box_header, .task, button.add_new, button.clear_all {
 			color: $green;
 		}
 
@@ -41,11 +33,10 @@
 		}
 	}
 
-	&:nth-of-type(3){
-		border-right: $base-border;
+	&.noImpUrg {
 	 	color: $yellow;
 
-	 	.box_header, button.add_new, button.clear_all {
+	 	h2.box_title, span.tasks_counter, .box_header, .task, button.add_new, button.clear_all {
 			color: $yellow;
 		}
 
@@ -58,10 +49,10 @@
 		}
 	}
 
-	&:nth-of-type(4){
+	&.noImpNoUrg{
 	 	color: $blue;
 
-	 	.box_header, button.add_new, button.clear_all {
+	 	h2.box_title, span.tasks_counter, .task, .box_header, button.add_new, button.clear_all {
 			color: $blue;
 		}
 
@@ -79,16 +70,18 @@
 	padding: $gutter;
 }
 
-.box_header {
+.box_header{
 	background-color: transparent;
 	height: $gutter*2;
 
 	h2.box_title {
+		display: inline-block;
 		float: left;
 	}
 
 	span.tasks_counter {
 		float: right;
+		display: inline-block;
 	}
 }
 

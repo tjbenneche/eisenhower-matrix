@@ -46,17 +46,22 @@ class BoxContainer extends React.Component {
       storage.get(storageKey, (error, data) => {
         if (error) return;
         if (data.foo) {
-          console.log(storageKey);
-          console.log(data.foo);
-          this.setState({taskData: [data.foo]});
+          let rData = data.foo
+          this.setState({totalTasks: rData.length - 1});
+          this.setState({taskData: data.foo});
         } else {
-          let errorData = {id: 0, boxId: this.props.boxId, task: 'Error in componentWillMount()', completed: false};
+          const errorData = {
+            id: 0, 
+            boxId: this.props.boxId, 
+            task: 'Error in componentWillMount()', 
+            completed: false
+          };
           this.setState({taskData: [errorData] });
         }
       });     
     } else {
       // do nothing
-      console.log('check componentWillMount()');
+      console.warn('Error: componentWillMount()');
     }
   }
 
@@ -73,9 +78,8 @@ class BoxContainer extends React.Component {
             task : this.state.value, 
             completed: false
       };
-      const newArray = this.state.taskData.concat([newTask]);
+      const newArray = this.state.taskData.concat(newTask);
       this.setState({totalTasks : currentIndex});
-
       this.setState({ taskData: newArray}, function(){
           this.refs.task_entry.value = '';
       });
@@ -84,8 +88,6 @@ class BoxContainer extends React.Component {
       storage.set(storageKey, { foo : newArray }, function(error, data) {
         if (error) throw error;
         storage.get(storageKey, function(error, data) {
-          console.log('handleAddTask()');
-          console.log(data.foo);
         })
       });        
     }
@@ -109,10 +111,8 @@ class BoxContainer extends React.Component {
 
   render() {
     const { taskData, totalTasks, completedTasks } = this.state;
-    const cleanData = taskData[0]
-
     return (
-      <div className='box'>
+      <div className={'box' + ' ' + this.props.boxId}>
         <div className='box_container'>
           <div className='box_header'>  
             <h2 className='box_title'>{this.props.boxTitle}</h2> 
@@ -132,7 +132,7 @@ class BoxContainer extends React.Component {
             />
           </div>
           <div className='box_inner'>
-              {cleanData ? cleanData.map((task, i) => {
+              {taskData ? taskData.map((task, i) => {
                 if(task.box === this.props.boxId){
                   return (
                     <Task 

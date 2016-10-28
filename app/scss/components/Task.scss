@@ -4,7 +4,8 @@
 
 .task_strikethrough {
 	padding: $base-spacing 0;
-	text-decoration: line-through;	
+	text-decoration: line-through;
+  color: $grey;	
 }
 
 input.task_checkbox {
