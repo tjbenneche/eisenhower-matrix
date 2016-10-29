@@ -1,6 +1,6 @@
 .box {
   flex: 0 0 50%;
-  min-height: 348px;
+  height: 350px;
   background-color: $white;
 
 	&.impUrg {
@@ -68,6 +68,11 @@
 
 .box_container {
 	padding: $gutter;
+}
+
+.box_inner {
+  overflow-y: scroll;
+  height: 300px;
 }
 
 .box_header{

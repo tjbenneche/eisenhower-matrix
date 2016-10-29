@@ -41,42 +41,50 @@ class BoxContainer extends React.Component {
     // if our state taskData is empty, check the persistent
     // storage for tasks to populate boxes with
 
-    let storageKey = this.props.boxId + '_tasks';
+    let storageKeyBase = this.props.boxId + '_tasks_'
+      , tempArray = []
+      , finished = false
+      , i;
     if(this.state.taskData.length === 0){ 
-      storage.get(storageKey, (error, data) => {
-        if (error) return;
-        if (data.foo) {
-          let rData = data.foo
-          this.setState({totalTasks: rData.length - 1});
-          this.setState({taskData: data.foo});
-        } else {
-          const errorData = {
-            id: 0, 
-            boxId: this.props.boxId, 
-            task: 'Error in componentWillMount()', 
-            completed: false
-          };
-          this.setState({taskData: [errorData] });
-        }
-      });     
+      for(i = 0; i<=5; i++) { 
+        let storageKey = storageKeyBase + i;
+        storage.get(storageKey, (error, data) => {
+          console.log(storageKey);
+          let isEmpty = Object.keys(data).length === 0;
+          if (error) return;     
+          if (data) { 
+            tempArray.push(data);
+            console.log(tempArray);
+          } else {
+            return;
+          }
+        });     
+      }
+      this.setState({ taskData: tempArray });
+      console.log(this.state.taskData);
     } else {
-      // do nothing
-      console.warn('Error: componentWillMount()');
+      const errorData = {
+        id: 0, 
+        boxId: this.props.boxId, 
+        task: 'Error in componentWillMount()', 
+        completed: false
+      };
+      this.setState({taskData: [errorData] });
     }
   }
 
   handleAddTask(event){
-    let storageKey = this.props.boxId + '_tasks';
-
     // only run on enter keypress
     if (event.which === 13){ 
       event.preventDefault();
       const currentIndex = this.state.totalTasks + 1;
+      let storageKey = this.props.boxId + '_task_' + currentIndex;
+
       const newTask = {  
-            id: currentIndex,        
-            box: this.props.boxId,  
-            task : this.state.value, 
-            completed: false
+        id: currentIndex,        
+        box: this.props.boxId,  
+        task : this.state.value, 
+        completed: false
       };
       const newArray = this.state.taskData.concat(newTask);
       this.setState({totalTasks : currentIndex});
@@ -85,10 +93,10 @@ class BoxContainer extends React.Component {
       });
 
       // save to persistent storage too!
-      storage.set(storageKey, { foo : newArray }, function(error, data) {
-        if (error) throw error;
-        storage.get(storageKey, function(error, data) {
-        })
+      storage.set(storageKey, {taskEntry: newArray}, 
+        function(error, data) {
+          if (error) throw error;
+          console.log(storageKey);
       });        
     }
   }
@@ -111,6 +119,7 @@ class BoxContainer extends React.Component {
 
   render() {
     const { taskData, totalTasks, completedTasks } = this.state;
+
     return (
       <div className={'box' + ' ' + this.props.boxId}>
         <div className='box_container'>
@@ -138,6 +147,7 @@ class BoxContainer extends React.Component {
                     <Task 
                       key={task.id}
                       index={i}
+                      box={task.box}
                       id={task.id}
                       task={task.task}
                       taskComplete={this.handleCompletedTasksCount.bind(this)}
